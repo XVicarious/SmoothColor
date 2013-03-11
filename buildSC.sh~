@@ -10,6 +10,7 @@ function genData {
   data="data:image/png;base64,"
   for f in $1/png/*.png
   do
+    echo "base64 -w0 $f"
     data+=$(base64 -w0 $f)
     echo "--Processing $f"
     echo $data > $(basename "$1/b64/$f.b64")
