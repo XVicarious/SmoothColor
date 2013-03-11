@@ -7,7 +7,7 @@ http://xvicario.us/
 
 @namespace url(http://www.w3.org/1999/xhtml);
 
-@import "SmoothColor-Includes";
+@import "SmoothColor-Includes"
 
 @-moz-document domain("facebook.com") {
 #pageLogo {
