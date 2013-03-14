@@ -41,7 +41,7 @@ a[href*='/info'] {
 }
 .fbTimelineTwoColumn[data-side="r"] {
     .spinePointer {
-        background-image: url(@leftTimelineArrow) !important;
+        background-image: url(@rightTimelineArrow) !important;
         background-position: 0 0 !important;
     }
 }
@@ -344,7 +344,7 @@ a[href*='/favorites'] {
 }
 .fbTimelineTwoColumn[data-side="l"] {
     .spinePointer {
-        background-image: url(@rightTimelineArrow) !important;
+        background-image: url(@leftTimelineArrow) !important;
         background-position: 0px 0px !important;
     }
 }
