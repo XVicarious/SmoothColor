@@ -56,8 +56,8 @@ function makeIncludes {
 
 function buildThisBitch {
   up="${1^}"
-  lessc SmoothColor.less $1\\css\\Smooth$1-uncompressed.css
-  lessc -x SmoothColor.less $1\\css\Smooth$1.css
+  lessc SmoothColor.less $1/css/Smooth$1-uncompressed.css
+  lessc -x SmoothColor.less $1/css/Smooth$1.css
   echo "Compile Completed!"
 }
 
