@@ -13,8 +13,8 @@ http://xvicario.us/
 #pageLogo {
     a {
         background-image: url(@pageLogo) !important;
-        background-color: @color03 !important;
-        background-position: 3px 5px !important;
+        //background-color: @color03 !important;
+        background-position: 18px 9px !important;
     }
     a:hover {
         background-color: @color02 !important;
@@ -41,7 +41,7 @@ a[href*='/info'] {
 }
 .fbTimelineTwoColumn[data-side="r"] {
     .spinePointer {
-        background-image: url(@rightTimelineArrow) !important;
+        background-image: url(@leftTimelineArrow) !important;
         background-position: 0 0 !important;
     }
 }
@@ -180,7 +180,7 @@ a[href*='/music'] {
     border-left-color: @color14 !important;
 }
 #blueBar {
-    border-bottom-color: @color01 !important;
+    //border-bottom-color: @color01 !important;
 }
 #fbRequestsJewel {
     a.jewelButton {
@@ -344,7 +344,7 @@ a[href*='/favorites'] {
 }
 .fbTimelineTwoColumn[data-side="l"] {
     .spinePointer {
-        background-image: url(@leftTimelineArrow) !important;
+        background-image: url(@rightTimelineArrow) !important;
         background-position: 0px 0px !important;
     }
 }
