@@ -45,6 +45,22 @@ function replaceData {
   done
 }
 
+function makeIncludes {
+  up="${1^}"
+  rm SmoothColor-Includes.less
+  echo "@import \"./$1/less/Smooth$up-Colors\";" > tmpInclude
+  echo "@import \"./$1/less/Smooth$up-Images\";" >> tmpInclude
+  mv tmpInclude SmoothColor-Includes.less
+  echo "Generated Include File..."
+}
+
+function buildThisBitch {
+  up="${1^}"
+  lessc SmoothColor.less $1/css/Smooth$1-uncompressed.css
+  lessc -x SmoothColor.less $1/css/Smooth$1.css
+  echo "Compile Completed!"
+}
+
 if [ $# -lt 1 ]
 then
   echo "Usage: $0 color"
@@ -54,41 +70,22 @@ fi
 case "$1" in
 red)  genData $1
       replaceData $1
-      rm SmoothColor-Includes.less
-      echo "@import \"SmoothRed-Colors\";" > tmpInclude
-      echo "@import \"SmoothRed-Images\";" >> tmpInclude
-      mv tmpInclude SmoothColor-Includes.less
-      echo "Generated Include File..."
-      lessc SmoothColor.less SmoothRed-uncompressed.css
-      lessc -x SmoothColor.less SmoothRed.css
-      echo "Compile Completed!"
+      makeIncludes $1
+      buildThisBitch $1
       ;;
-blue) rm SmoothColor-Includes.less
-      echo "@import \"SmoothBlue-Colors\";" > tmpInclude
-      mv tmpInclude SmoothColor-Includes.less
-      echo "Unable to build at this time"
+blue) echo "Unable to build at this time"
       ;;
 green) genData $1
        replaceData $1
        rm SmoothColor-Includes.less
-       echo "@import \"SmoothGreen-Colors\";" > tmpInclude
-       echo "@import \"SmoothGreen-Images\";" >> tmpInclude
-       mv tmpInclude SmoothColor-Includes.less
-       echo "Generated Include File..."
-       lessc SmoothColor.less SmoothGreen-uncompressed.css
-       lessc -x SmoothColor.less SmoothGreen.css
-       echo "Compile Completed!"
+       makeIncludes $1
+       buildThisBitch $1
        ;;
 purple) genData $1
         replaceData $1
         rm SmoothColor-Includes.less
-        echo "@import \"SmoothPurple-Colors\";" > tmpInclude
-        echo "@import \"SmoothPurple-Images\";" >> tmpInclude
-        mv tmpInclude SmoothColor-Includes.less
-        echo "Generated Include File..."
-        lessc SmoothColor.less SmoothPurple-uncompressed.css
-        lessc -x SmoothColor.less SmoothPurple.css
-        echo "Compile Completed!"
+	makeIncludes $1
+        buildThisBitch $1
         ;;
 *)    echo "Unknown color $1"
       ;;
