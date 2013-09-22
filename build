@@ -22,10 +22,10 @@ function genData {
   do
     ff=$(basename $f)
     data=$(openssl enc -base64 -in $f | tr -d '\n' | sed -e 's/^/data:image\/png;base64,/')
-	if [ $DEBUG -eq 1 ]
-	then
-		echo -e "--Processing ${CyanF}$f${Reset}, outputting to ${CyanF}$1/b64/$ff.b64${Reset}"
-	fi
+  	if [ $DEBUG -eq 1 ]
+  	then
+  		echo -e "--Processing ${CyanF}$f${Reset}, outputting to ${CyanF}$1/b64/$ff.b64${Reset}"
+  	fi
     echo $data > "$1/b64/$ff.b64"
   done
 }
@@ -43,10 +43,10 @@ function replaceData {
     then
       uri=$(cat $1/b64/$i)
       sed -i s@$i@$uri@g $file > $file.tmp
-	  if [ $DEBUG -eq 1 ]
-	  then
-		echo -e "--Inserting ${CyanF}$i${Reset}"
-	  fi
+	    if [ $DEBUG -eq 1 ]
+	    then
+		    echo -e "--Inserting ${CyanF}$i${Reset}"
+	    fi
     fi
   done
 }
@@ -62,15 +62,15 @@ function makeIncludes {
 
 function buildThisBitch {
   up="${1^}"
-  lessc Common/SmoothColor.less $1/css/Smooth$1-uncompressed.css
+  lessc Common/SmoothColor.less $1/css/Smooth$up-uncompressed.css
   NX=$?
-  lessc -x Common/SmoothColor.less $1/css/Smooth$1.css
+  lessc -x Common/SmoothColor.less $1/css/Smooth$up.css
   if [ $? -eq 0 ] && [ $NX -eq 0 ]
   then
-	echo "Compile Completed!"
+	  echo "Compile Completed!"
   else
-	echo "Compile has failed, exiting with 1"
-	exit 1
+	  echo "Compile has failed, exiting with 1"
+	  exit 1
   fi
 }
 
