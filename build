@@ -22,7 +22,10 @@ function genData {
   do
     ff=$(basename $f)
     data=$(openssl enc -base64 -in $f | tr -d '\n' | sed -e 's/^/data:image\/png;base64,/')
-    echo -e "--Processing ${CyanF}$f${Reset}, outputting to ${CyanF}$1/b64/$ff.b64${Reset}"
+	if [ $DEBUG -eq 1 ]
+	then
+		echo -e "--Processing ${CyanF}$f${Reset}, outputting to ${CyanF}$1/b64/$ff.b64${Reset}"
+	fi
     echo $data > "$1/b64/$ff.b64"
   done
 }
@@ -30,10 +33,10 @@ function genData {
 function replaceData {
   B=($1)
   color="${B[@]^}"
-  file="Smooth$color-Images.less"
+  file="$1/less/Smooth$color-Images.less"
   cp SmoothColor-Images.less $file
   echo "Creating $file..."
-  echo "Includings images in $file..."
+  echo "Including images in $file..."
   cat images.txt | while read -r i
   do
     if grep -q "$i" "$file"
@@ -47,46 +50,50 @@ function replaceData {
 
 function makeIncludes {
   up="${1^}"
-  rm SmoothColor-Includes.less
+  rm  Common/SmoothColor-Includes.less
   echo "@import \"./$1/less/Smooth$up-Colors\";" > tmpInclude
   echo "@import \"./$1/less/Smooth$up-Images\";" >> tmpInclude
-  mv tmpInclude SmoothColor-Includes.less
+  mv tmpInclude Common/SmoothColor-Includes.less
   echo "Generated Include File..."
 }
 
 function buildThisBitch {
   up="${1^}"
-  lessc SmoothColor.less $1/css/Smooth$1-uncompressed.css
-  lessc -x SmoothColor.less $1/css/Smooth$1.css
-  echo "Compile Completed!"
+  lessc Common/SmoothColor.less $1/css/Smooth$1-uncompressed.css
+  NX=$?
+  lessc -x Common/SmoothColor.less $1/css/Smooth$1.css
+  if [ $? -eq 0 ] && [ $NX -eq 0 ]
+  then
+	echo "Compile Completed!"
+  else
+	echo "Compile has failed, exiting with 1"
+	exit 1
+  fi
 }
 
 if [ $# -lt 1 ]
 then
-  echo "Usage: $0 color"
-  echo "Where color is {red,blue,green}"
+  echo "Usage: $0 {color} {debug? optional}"
+  echo "Where color is {red,blue,purple}"
+  echo "And where debug? is 0 or 1"
 fi
 
-case "$1" in
-red)  genData $1
-      replaceData $1
-      makeIncludes $1
-      buildThisBitch $1
-      ;;
-blue) echo "Unable to build at this time"
-      ;;
-green) genData $1
-       replaceData $1
-       rm SmoothColor-Includes.less
-       makeIncludes $1
-       buildThisBitch $1
-       ;;
-purple) genData $1
-        replaceData $1
-        rm SmoothColor-Includes.less
+if [ $2 ]
+then
+	if [ $2 -eq 1 ]
+	then
+		DEBUG=1
+	else
+		DEBUG=0
+	fi
+else
+	DEBUG=0
+fi
+
+if [ $1 ]
+then
+	genData $1
+	replaceData $1
 	makeIncludes $1
-        buildThisBitch $1
-        ;;
-*)    echo "Unknown color $1"
-      ;;
-esac
+	buildThisBitch $1
+fi

@@ -19,7 +19,6 @@ red_has_map.png.b64
 red_has_photos.png.b64
 red_home_town.png.b64
 red_likes.png.b64
-red_logo_fixed_colo.png.b64
 red_message.png.b64
 red_messages_thing.png.b64
 red_music.png.b64
@@ -40,3 +39,5 @@ red_timeline_dot.png.b64
 red_timeline.png.b64
 red_tiny_like.png.b64
 red_work.png.b64
+blueBarSpine.png.b64
+dred_logo.png.b64
