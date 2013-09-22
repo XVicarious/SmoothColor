@@ -11,6 +11,12 @@ Reset="${Escape}[0m";
 function genData {
   if [ -d "$1/png" ] ; then
     echo "Good... $1/png exists..."
+    if [ -d "$1/b64" ] ; then
+      echo "$1/b64 exists..."
+    else
+      echo "$1/b64 doesn't exist... fixing this"
+      mkdir $1/b64
+    fi
     echo "Generating DataURIs from the images..."
   else
     echo -e "$1/png does not exist, ${RedF}${BoldOn}aborting${BoldOff}${Reset}..."
