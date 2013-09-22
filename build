@@ -34,7 +34,7 @@ function replaceData {
   B=($1)
   color="${B[@]^}"
   file="$1/less/Smooth$color-Images.less"
-  cp SmoothColor-Images.less $file
+  cp Common/SmoothColor-Images.less $file
   echo "Creating $file..."
   echo "Including images in $file..."
   cat images.txt | while read -r i
@@ -43,7 +43,10 @@ function replaceData {
     then
       uri=$(cat $1/b64/$i)
       sed -i s@$i@$uri@g $file > $file.tmp
-      echo -e "--Inserting ${CyanF}$i${Reset}"
+	  if [ $DEBUG -eq 1 ]
+	  then
+		echo -e "--Inserting ${CyanF}$i${Reset}"
+	  fi
     fi
   done
 }
